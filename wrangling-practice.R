@@ -35,16 +35,6 @@ penguins |>
                      sample_size = n())
 
 
-
-penguins |>
-  filter(species == "Adelie") |>
-  filter(!is.na(flipper_length_mm),
-         !is.na(sex)) |> #remove rows that are not NA
-  group_by(sex) |>
-  summarise(mean = mean(flipper_length_mm),
-            standard_dev = sd(flipper_length_mm),
-            sample_size = n())
-
 #Wrangling continued - joins of different flavors
 
 #Practice with joins
@@ -91,6 +81,48 @@ animals |>
 
 anti_join(sites, animals)
 
+
+#Practice with lubridate
+
+my_date <- "03_13-1998"
+lubridate::mdy(my_date) #fixed date to ISO 8601
+
+#new format for date
+my_date <- "08-Jun-1974"
+lubridate::dmy(my_date)
+
+#another example of different format
+my_date <- "19160518"
+lubridate::ymd(my_date)
+
+#what happens if we give lubridate a date that doesn't make sense?
+lubridate::mdy("1942-08-30") #incorrect input
+
+lubridate::dmy("09/12/84")
+
+#working with dates-times
+time <- "2020-08-12 11:18"
+ymd_hm(time)
+class(ymd_hm(time))
+time <- ymd_hm(time)
+
+#convert to PDT
+with_tz(time, "America/Los_Angeles")
+
+#extract info from dates
+week(time)
+year(time)
+day(time)
+
+time <- ymd_hm(time, tz = "America/Los_Angeles")
+
+Sys.time()
+
+start_time <- Sys.time()
+
+end_time <- Sys.time()
+
+end_time - start_time
 
 
 
